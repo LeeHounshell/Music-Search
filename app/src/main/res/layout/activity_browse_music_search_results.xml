@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusableInTouchMode="true"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".view.BrowseMusicSearchResultsActivity">
+
+    <android.support.v7.widget.AppCompatTextView
+        style="@style/MyPrimaryTextViewStyle"
+        android:id="@+id/music_search_results_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/music_search_results"
+        android:textStyle="bold" />
+
+    <com.harlie.leehounshell.musicsearch.util.CustomRecyclerView
+        android:id="@+id/results_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        tools:listitem="@layout/one_music_model_row" />
+
+</LinearLayout>

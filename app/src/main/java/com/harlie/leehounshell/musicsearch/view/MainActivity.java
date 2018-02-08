@@ -1,13 +1,11 @@
 package com.harlie.leehounshell.musicsearch.view;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.harlie.leehounshell.musicsearch.MusicSearchIntentService;
@@ -75,16 +73,18 @@ public class MainActivity extends BaseActivity {
         LogHelper.v(TAG, "onMessageEvent");
         String searchResults = event.getSearchResults();
         //LogHelper.v(TAG, "===> SEARCH RESULTS: " + searchResults);
+        goToBrowseMusicSearchResultsActivity(searchResults);
+
         Gson gson = new Gson();
         MusicModelList musicModelList = gson.fromJson(searchResults, MusicModelList.class);
-        MusicModel firstMusicModel = musicModelList.getResults().get(0); // FIXME: put these results into a listview
+        MusicModel firstMusicModel = musicModelList.getResults().get(0); // FIXME: put these results into a list
         LogHelper.v(TAG, "first firstMusicModel=" + firstMusicModel);
     }
 
     @Override
     protected void onDestroy() {
         LogHelper.v(TAG, "onDestroy");
-        super.onDestroy();
         savedInstanceState = null;
+        super.onDestroy();
     }
 }

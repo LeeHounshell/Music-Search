@@ -24,10 +24,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ServiceController;
 import org.robolectric.annotation.Config;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.ACTION_FIND_MUSIC;
 import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.MUSIC_SEARCH;
@@ -41,19 +38,19 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class MusicSearchIntentServiceTest {
     private final static String TAG = "LEE: <" + MusicSearchIntentServiceTest.class.getSimpleName() + ">";
 
-    private MusicSearchIntentService service;
     private ServiceController<MusicSearchIntentService> controller;
     private MusicModel musicModel = null;
 
     @Before
     public void setUp() {
         controller = Robolectric.buildService(MusicSearchIntentService.class);
-        service = controller.bind().create().get();
+        MusicSearchIntentService service = controller.bind().create().get();
         musicModel = new MusicModel(); // TODO: add all constructor arguments
         musicModel.setArtistName("Tom Waits");
         musicModel.setTrackName("I Hope That I Don't Fall In Love With You");
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testWithIntent() {
         AppCompatActivity activity = Robolectric.setupActivity(MainActivity.class);
@@ -87,6 +84,7 @@ public class MusicSearchIntentServiceTest {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testOnHandleIntent() {
         AppCompatActivity activity = Robolectric.setupActivity(MainActivity.class);

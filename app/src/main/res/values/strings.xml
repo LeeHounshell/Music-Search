@@ -3,4 +3,9 @@
     <string name="search_for_music">enter a search term</string>
     <string name="music_search">Search for Music</string>
     <string name="welcome">Welcome to Music Search!</string>
+    <string name="music_search_results">The Search Results</string>
+    <string name="album_artwork">The album cover image</string>
+    <string name="track_name">The track name</string>
+    <string name="artist_name">The artist name</string>
+    <string name="album_name">The album name</string>
 </resources>

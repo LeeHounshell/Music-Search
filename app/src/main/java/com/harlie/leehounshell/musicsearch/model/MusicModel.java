@@ -1,7 +1,5 @@
 package com.harlie.leehounshell.musicsearch.model;
 
-import com.harlie.leehounshell.musicsearch.util.LogHelper;
-
 import java.util.Date;
 
 // This is a POJO for a single JSON array element returned by requests made to https://itunes.apple.com/search?term=<search-term>

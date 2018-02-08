@@ -11,13 +11,13 @@ public class FileUtil {
 
     public static String convertStreamToString(java.io.InputStream is) {
         LogHelper.v(TAG, "convertStreamToString");
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         if (is != null) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String str;
             try {
                 while ((str = reader.readLine()) != null) {
-                    buf.append(str + "\n");
+                    buf.append(str).append("\n");
                 }
             }
             catch (IOException e) {

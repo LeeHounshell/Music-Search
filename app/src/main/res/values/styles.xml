@@ -6,12 +6,36 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- material design colors -->
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:windowBackground">@color/colorPrimaryLight</item>
+        <!-- window settings -->
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
     </style>
 
-    <style name="MyTextViewStyle" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorBlack</item>
-        <item name="android:textSize">25sp</item>
-        <item name="android:padding">24dp</item>
+    <style name="MyPrimaryTextViewStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="MySecondaryTextViewStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="CardViewStyle" parent="AppTheme">
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+    </style>
+
+    <style name="AlbumImageStyle" parent="AppTheme">
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:cropToPadding">false</item>
     </style>
 
 </resources>

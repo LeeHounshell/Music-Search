@@ -1,0 +1,51 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- enable window content transitions -->
+        <item name="android:windowContentTransitions">false</item>
+        <!-- enable overlap of transitions
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+         -->
+        <!-- enable overlap of transitions
+        <item name="android:windowSharedElementEnterTransition">@android:transition/fade</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/fade</item>
+         -->
+        <!-- material design colors -->
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:windowBackground">@color/colorPrimaryLight</item>
+        <!-- window settings -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Dialog.Alert</item>
+        <!-- window animation
+        <item name="android:windowAnimationStyle">@style/MyAnimation.Activity</item>
+         -->
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+    </style>
+
+    <!--
+    <style name="MyAnimation.Activity" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/fadein</item>
+        <item name="android:windowExitAnimation">@anim/fadeout</item>
+        <item name="android:activityOpenEnterAnimation">@anim/fadein</item>
+        <item name="android:activityOpenExitAnimation">@anim/fadeout</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fadein</item>
+        <item name="android:activityCloseExitAnimation">@anim/fadeout</item>
+    </style>
+    -->
+
+    <style name="CardViewStyle" parent="AppTheme">
+        <item name="android:elevation">@dimen/cardview_elevation</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:textIsSelectable">false</item>
+        <item name="android:layout_marginStart">@dimen/card_margin</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginEnd">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+    </style>
+
+</resources>
