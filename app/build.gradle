@@ -16,13 +16,54 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '27.0.3'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+task copyResDirectoryToClasses(type: Copy){
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/intermediates/classes/test/debug/res"
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'assembleDebug') {
+        task.dependsOn 'copyResDirectoryToClasses'
+    }
+}
+
+afterEvaluate {
+    assembleDebug.dependsOn copyResDirectoryToClasses
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.android.support:design:27.0.2"
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation "android.arch.core:core-testing:1.1.0"
+
+    // Mockito for unit and Android tests
+    testImplementation "org.mockito:mockito-core:2.8.9"
+    testImplementation "org.mockito:mockito-android:2.7.22"
+
+    // Robolectric testing framework
+    testImplementation "org.robolectric:robolectric:3.5.1"
+
+    android {
+        testOptions {
+            unitTests {
+                includeAndroidResources = true
+            }
+        }
+    }
 }
