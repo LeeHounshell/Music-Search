@@ -6,39 +6,40 @@ import java.util.Date;
 public class MusicModel {
     private final static String TAG = "LEE: <" + MusicModel.class.getSimpleName() + ">";
 
-    String title;
-    String kind;
-    long artistId;
-    long collectionId;
-    long trackId;
-    String artistName;
-    String collectionName;
-    String trackName;
-    String trackCensoredName;
-    String trackViewUrl;
-    String previewUrl;
-    String artworkUrl30;
-    String artworkUrl60;
-    String artworkUrl100;
-    String collectionPrice;
-    String trackPrice;
-    Date releaseDate;
-    String collectionExplicitness;
-    String trackExplicitness;
-    int discCount;
-    int discNumber;
-    int trackCount;
-    int trackNumber;
-    int trackTimeMillis;
-    String country;
-    String currency;
-    String primaryGenreName;
-    boolean isStreamable;
+    private String title;
+    private String kind;
+    private long artistId;
+    private long collectionId;
+    private long trackId;
+    private String artistName;
+    private String collectionName;
+    private String trackName;
+    private String trackCensoredName;
+    private String trackViewUrl;
+    private String previewUrl;
+    private String artworkUrl30;
+    private String artworkUrl60;
+    private String artworkUrl100;
+    private String collectionPrice;
+    private String trackPrice;
+    private Date releaseDate;
+    private String collectionExplicitness;
+    private String trackExplicitness;
+    private int discCount;
+    private int discNumber;
+    private int trackCount;
+    private int trackNumber;
+    private int trackTimeMillis;
+    private String country;
+    private String currency;
+    private String primaryGenreName;
+    private boolean isStreamable;
 
     public MusicModel() {
         //LogHelper.v(TAG, "MusicModel");
     }
 
+    @SuppressWarnings("WeakerAccess")
     public MusicModel(String title,
                       String kind,
                       long artistId,

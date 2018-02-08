@@ -21,7 +21,7 @@ public class MusicSearchResults implements MyResultReceiver.Receiver {
 
         private final String searchResults;
 
-        public MusicSearchResultsEvent (String searchResults) {
+        MusicSearchResultsEvent(String searchResults) {
             this.searchResults = searchResults;
         }
 
@@ -60,7 +60,7 @@ public class MusicSearchResults implements MyResultReceiver.Receiver {
         }
     }
 
-    public static void post(String searchResults) {
+    private static void post(String searchResults) {
         LogHelper.v(TAG, "post");
         MusicSearchResultsEvent searchResultsEvent = new MusicSearchResultsEvent(searchResults);
         EventBus.getDefault().post(searchResultsEvent);

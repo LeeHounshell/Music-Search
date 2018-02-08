@@ -27,7 +27,7 @@ public class BaseActivity extends AppCompatActivity
 {
     private final static String TAG = "LEE: <" + BaseActivity.class.getSimpleName() + ">";
 
-    public final static String KEY_SEARCH_RESULTS = "search_results";
+    final static String KEY_SEARCH_RESULTS = "search_results";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class BaseActivity extends AppCompatActivity
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static int orientation() {
         //LogHelper.v(TAG, "orientation");
         Context context = MusicSearchApplication.getAppContext();
@@ -62,21 +63,21 @@ public class BaseActivity extends AppCompatActivity
         return sDeviceOrientation;
     }
 
-    public int getWidth() {
+    int getWidth() {
         //LogHelper.v(TAG, "getWidth");
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         return metrics.widthPixels;
     }
 
-    public int getHeight() {
+    int getHeight() {
         //LogHelper.v(TAG, "getHeight");
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         return metrics.heightPixels;
     }
 
-    public void hideSoftKeyboard() {
+    void hideSoftKeyboard() {
         LogHelper.v(TAG, "hideSoftKeyboard");
         if (getWindow() != null) {
             if (getCurrentFocus() != null) {
@@ -89,7 +90,7 @@ public class BaseActivity extends AppCompatActivity
         }
     }
 
-    protected void goToBrowseMusicSearchResultsActivity(String searchResults) {
+    void goToBrowseMusicSearchResultsActivity(String searchResults) {
         LogHelper.v(TAG, "goToBrowseMusicSearchResultsActivity");
         Intent browseIntent = new Intent(this, BrowseMusicSearchResultsActivity.class);
         browseIntent.putExtra(KEY_SEARCH_RESULTS, searchResults);

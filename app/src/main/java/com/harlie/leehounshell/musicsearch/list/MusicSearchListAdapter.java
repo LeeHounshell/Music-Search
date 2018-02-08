@@ -10,26 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.google.gson.Gson;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.model.MusicModelList;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+//import com.squareup.picasso.Picasso;
 
 public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchListAdapter.MusicSearchViewHolder> {
     private final static String TAG = "LEE: <" + MusicSearchListAdapter.class.getSimpleName() + ">";
 
-    private Context context;
+    private final Context context;
     private List<MusicModel> musicModelList;
 
-    public MusicSearchListAdapter(Context context, String musicSearchResultsJSON) {
+    public MusicSearchListAdapter(Context context, MusicModelList musicModelList) {
         LogHelper.v(TAG, "MusicSearchListAdapter");
         this.context = context;
-        Gson gson = new Gson();
-        MusicModelList musicModelList = gson.fromJson(musicSearchResultsJSON, MusicModelList.class);
         if (musicModelList != null) {
             this.musicModelList = musicModelList.getResults();
         }
@@ -48,10 +48,21 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
         MusicModel musicModel = musicModelList.get(position);
         //Render image using Picasso library
         if (! TextUtils.isEmpty(musicModel.getArtworkUrl100())) {
-            Picasso.with(context).load(musicModel.getArtworkUrl100()) // NOTE: will be slower loading the large size artwork
-                    .error(R.drawable.album_image)
+
+//            Picasso.with(context)
+//                    .load(musicModel.getArtworkUrl100()) // NOTE: will be slower loading the large size artwork
+//                    .error(R.drawable.album_image)
+//                    .placeholder(R.drawable.album_image)
+//                    .fit()
+//                    .into(holder.getAlbumCoverArt());
+
+            Glide.with(context)
+                    .load(musicModel.getArtworkUrl100()) // NOTE: will be slower loading the large size artwork
+                    .apply(new RequestOptions()
                     .placeholder(R.drawable.album_image)
+                    .fitCenter())
                     .into(holder.getAlbumCoverArt());
+
         }
         holder.getTrackName().setText(musicModel.getTrackName());
         holder.getArtistName().setText(musicModel.getArtistName());

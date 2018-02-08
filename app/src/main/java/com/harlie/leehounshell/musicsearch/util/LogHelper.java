@@ -28,7 +28,7 @@ public class LogHelper {
     private static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();
     private static final int MAX_LOG_TAG_LENGTH = 23;
 
-    public static String makeLogTag(String str) {
+    private static String makeLogTag(String str) {
         if (str.length() > MAX_LOG_TAG_LENGTH - LOG_PREFIX_LENGTH) {
             return LOG_PREFIX + str.substring(0, MAX_LOG_TAG_LENGTH - LOG_PREFIX_LENGTH - 1);
         }
@@ -78,7 +78,7 @@ public class LogHelper {
         log(tag, Log.ERROR, t, messages);
     }
 
-    public static void log(String tag, int level, Throwable t, Object... messages) {
+    private static void log(String tag, int level, Throwable t, Object... messages) {
         tag = tag.substring(0, Math.min(tag.length(), MAX_LOG_TAG_LENGTH));
         //noinspection ConstantConditions,PointlessBooleanExpression,PointlessBooleanExpression
         if (true || Log.isLoggable(tag, level)) { // FIXME: determine from Firebase config

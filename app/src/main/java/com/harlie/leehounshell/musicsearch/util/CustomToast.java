@@ -17,7 +17,7 @@ public class CustomToast {
     public static class CustomToastEvent {
         private final String toastMessage;
 
-        public CustomToastEvent(String toastMessage) {
+        CustomToastEvent(String toastMessage) {
             this.toastMessage = toastMessage;
         }
 
@@ -33,7 +33,7 @@ public class CustomToast {
         }
     }
 
-    public CustomToast() {
+    private CustomToast() {
         this.mToast = null;
     }
 

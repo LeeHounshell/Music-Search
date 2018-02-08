@@ -1,21 +1,17 @@
 package com.harlie.leehounshell.musicsearch.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
-import com.google.gson.Gson;
-import com.harlie.leehounshell.musicsearch.MusicSearchIntentService;
 import com.harlie.leehounshell.musicsearch.R;
-import com.harlie.leehounshell.musicsearch.model.MusicModel;
-import com.harlie.leehounshell.musicsearch.model.MusicModelList;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.util.MusicSearchResults;
-import com.harlie.leehounshell.musicsearch.util.MyResultReceiver;
+import com.harlie.leehounshell.musicsearch.view_model.MusicSearch_ViewModel;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -23,7 +19,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class MainActivity extends BaseActivity {
     private final static String TAG = "LEE: <" + MainActivity.class.getSimpleName() + ">";
 
-    Bundle savedInstanceState;
+    private Bundle savedInstanceState;
+    private MusicSearch_ViewModel musicSearch_viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +28,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
+        musicSearch_viewModel = ViewModelProviders.of(this).get(MusicSearch_ViewModel.class);
     }
 
     @Override
@@ -55,30 +53,16 @@ public class MainActivity extends BaseActivity {
                 hideSoftKeyboard();
                 String searchString = musicSearchEditText.getText().toString();
                 LogHelper.v(TAG, "onEditorAction: searchString=" + searchString);
-                searchForMusic(searchString);
+                musicSearch_viewModel.searchForMusic(searchString);
             }
             return false;
         });
     }
 
-    private void searchForMusic(String searchString) {
-        LogHelper.v(TAG, "searchForMusic: " + searchString);
-        MyResultReceiver receiver = new MyResultReceiver(new Handler());
-        receiver.setReceiver(new MusicSearchResults());
-        MusicSearchIntentService.startActionFindMusic(this, searchString, receiver);
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicSearchResults.MusicSearchResultsEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
-        String searchResults = event.getSearchResults();
-        //LogHelper.v(TAG, "===> SEARCH RESULTS: " + searchResults);
-        goToBrowseMusicSearchResultsActivity(searchResults);
-
-        Gson gson = new Gson();
-        MusicModelList musicModelList = gson.fromJson(searchResults, MusicModelList.class);
-        MusicModel firstMusicModel = musicModelList.getResults().get(0); // FIXME: put these results into a list
-        LogHelper.v(TAG, "first firstMusicModel=" + firstMusicModel);
+        goToBrowseMusicSearchResultsActivity(event.getSearchResults());
     }
 
     @Override
