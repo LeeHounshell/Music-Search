@@ -1,9 +1,14 @@
 package com.harlie.leehounshell.musicsearch.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.harlie.leehounshell.musicsearch.util.LogHelper;
+
 import java.util.Date;
 
 // This is a POJO for a single JSON array element returned by requests made to https://itunes.apple.com/search?term=<search-term>
-public class MusicModel {
+public class MusicModel implements Parcelable {
     private final static String TAG = "LEE: <" + MusicModel.class.getSimpleName() + ">";
 
     private String title;
@@ -37,6 +42,38 @@ public class MusicModel {
 
     public MusicModel() {
         //LogHelper.v(TAG, "MusicModel");
+    }
+
+    public MusicModel(MusicModel musicModel) {
+        LogHelper.v(TAG, "MusicModel");
+        this.title = musicModel.getTitle();
+        this.kind = musicModel.getKind();
+        this.artistId = musicModel.getArtistId();
+        this.collectionId = musicModel.getCollectionId();
+        this.trackId = musicModel.getTrackId();
+        this.artistName = musicModel.getArtistName();
+        this.collectionName = musicModel.getCollectionName();
+        this.trackName = musicModel.getTrackName();
+        this.trackCensoredName = musicModel.getTrackCensoredName();
+        this.trackViewUrl = musicModel.getTrackViewUrl();
+        this.previewUrl = musicModel.getPreviewUrl();
+        this.artworkUrl30 = musicModel.getArtworkUrl30();
+        this.artworkUrl60 = musicModel.getArtworkUrl60();
+        this.artworkUrl100 = musicModel.getArtworkUrl100();
+        this.collectionPrice = musicModel.getCollectionPrice();
+        this.trackPrice = musicModel.getTrackPrice();
+        this.releaseDate = musicModel.getReleaseDate();
+        this.collectionExplicitness = musicModel.getCollectionExplicitness();
+        this.trackExplicitness = musicModel.getTrackExplicitness();
+        this.discCount = musicModel.getDiscCount();
+        this.discNumber = musicModel.getDiscNumber();
+        this.trackCount = musicModel.getTrackCount();
+        this.trackNumber = musicModel.getTrackNumber();
+        this.trackTimeMillis = musicModel.getTrackTimeMillis();
+        this.country = musicModel.getCountry();
+        this.currency = musicModel.getCurrency();
+        this.primaryGenreName = musicModel.getPrimaryGenreName();
+        this.isStreamable = musicModel.isStreamable();
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -356,4 +393,85 @@ public class MusicModel {
                 ", isStreamable=" + isStreamable +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.kind);
+        dest.writeLong(this.artistId);
+        dest.writeLong(this.collectionId);
+        dest.writeLong(this.trackId);
+        dest.writeString(this.artistName);
+        dest.writeString(this.collectionName);
+        dest.writeString(this.trackName);
+        dest.writeString(this.trackCensoredName);
+        dest.writeString(this.trackViewUrl);
+        dest.writeString(this.previewUrl);
+        dest.writeString(this.artworkUrl30);
+        dest.writeString(this.artworkUrl60);
+        dest.writeString(this.artworkUrl100);
+        dest.writeString(this.collectionPrice);
+        dest.writeString(this.trackPrice);
+        dest.writeLong(this.releaseDate != null ? this.releaseDate.getTime() : -1);
+        dest.writeString(this.collectionExplicitness);
+        dest.writeString(this.trackExplicitness);
+        dest.writeInt(this.discCount);
+        dest.writeInt(this.discNumber);
+        dest.writeInt(this.trackCount);
+        dest.writeInt(this.trackNumber);
+        dest.writeInt(this.trackTimeMillis);
+        dest.writeString(this.country);
+        dest.writeString(this.currency);
+        dest.writeString(this.primaryGenreName);
+        dest.writeByte(this.isStreamable ? (byte) 1 : (byte) 0);
+    }
+
+    public MusicModel(Parcel in) {
+        this.title = in.readString();
+        this.kind = in.readString();
+        this.artistId = in.readLong();
+        this.collectionId = in.readLong();
+        this.trackId = in.readLong();
+        this.artistName = in.readString();
+        this.collectionName = in.readString();
+        this.trackName = in.readString();
+        this.trackCensoredName = in.readString();
+        this.trackViewUrl = in.readString();
+        this.previewUrl = in.readString();
+        this.artworkUrl30 = in.readString();
+        this.artworkUrl60 = in.readString();
+        this.artworkUrl100 = in.readString();
+        this.collectionPrice = in.readString();
+        this.trackPrice = in.readString();
+        long tmpReleaseDate = in.readLong();
+        this.releaseDate = tmpReleaseDate == -1 ? null : new Date(tmpReleaseDate);
+        this.collectionExplicitness = in.readString();
+        this.trackExplicitness = in.readString();
+        this.discCount = in.readInt();
+        this.discNumber = in.readInt();
+        this.trackCount = in.readInt();
+        this.trackNumber = in.readInt();
+        this.trackTimeMillis = in.readInt();
+        this.country = in.readString();
+        this.currency = in.readString();
+        this.primaryGenreName = in.readString();
+        this.isStreamable = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<MusicModel> CREATOR = new Parcelable.Creator<MusicModel>() {
+        @Override
+        public MusicModel createFromParcel(Parcel source) {
+            return new MusicModel(source);
+        }
+
+        @Override
+        public MusicModel[] newArray(int size) {
+            return new MusicModel[size];
+        }
+    };
 }

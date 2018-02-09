@@ -19,6 +19,8 @@ import com.harlie.leehounshell.musicsearch.model.MusicModelList;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 //import com.squareup.picasso.Picasso;
@@ -51,8 +53,14 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
 
     @Override
     public void onBindViewHolder(MusicSearchListAdapter.MusicSearchViewHolder holder, int position) {
-        LogHelper.v(TAG, "onBindViewHolder");
+        //LogHelper.v(TAG, "onBindViewHolder");
         MusicModel musicModel = musicModelList.get(position);
+
+        holder.itemView.setOnClickListener(v -> {
+            LogHelper.v(TAG, "-CLICK-");
+            post(musicModel);
+        });
+
         //Render image using Picasso library
         if (! TextUtils.isEmpty(musicModel.getArtworkUrl100())) {
 
@@ -71,6 +79,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
                     .into(holder.getAlbumCoverArt());
 
         }
+
         holder.getTrackName().setText(musicModel.getTrackName());
         holder.getArtistName().setText(musicModel.getArtistName());
         holder.getAlbumName().setText(musicModel.getCollectionName());
@@ -82,7 +91,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
         return (null != musicModelList ? musicModelList.size() : 0);
     }
 
-    class MusicSearchViewHolder extends RecyclerView.ViewHolder {
+    public class MusicSearchViewHolder extends RecyclerView.ViewHolder {
         private final String TAG = "LEE: <" + MusicSearchViewHolder.class.getSimpleName() + ">";
 
         private ImageView albumCoverArt;
@@ -139,4 +148,29 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
             this.albumName = albumName;
         }
     }
+
+    private void post(MusicModel musicModel) {
+        LogHelper.v(TAG, "post");
+        MusicClickItemEvent musicClickItemEvent = new MusicClickItemEvent(musicModel);
+        EventBus.getDefault().post(musicClickItemEvent);
+    }
+
+    public static class MusicClickItemEvent {
+        private final static String TAG = "LEE: <" + MusicClickItemEvent.class.getSimpleName() + ">";
+
+        private MusicModel musicModel;
+
+        public MusicClickItemEvent(MusicModel musicModel) {
+            this.musicModel = musicModel;
+        }
+
+        public MusicModel getMusicModel() {
+            return musicModel;
+        }
+
+        public void setMusicModel(MusicModel musicModel) {
+            this.musicModel = musicModel;
+        }
+    }
+
 }

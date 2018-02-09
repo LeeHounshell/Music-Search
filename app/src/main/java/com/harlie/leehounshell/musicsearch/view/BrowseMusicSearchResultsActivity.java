@@ -13,6 +13,9 @@ import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.view_model.MusicList_ViewModel;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class BrowseMusicSearchResultsActivity extends BaseActivity {
     private final static String TAG = "LEE: <" + BrowseMusicSearchResultsActivity.class.getSimpleName() + ">";
 
@@ -39,6 +42,12 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
             String tryAgain = getString(R.string.try_again);
             CustomToast.post(tryAgain);
             goToMainActivity(); // foobar, the search failed or the results were too big to fit in the Bundle
+        }
+        if (getActionBar() != null) { // FIXME: for this to work properly I need to add a Toolbar to the screen layouts, for now onBackPressed will do
+            getActionBar().setDisplayHomeAsUpEnabled(true); // show back arrow
+        }
+        else {
+            LogHelper.w(TAG, "unable to getActionBar()!");
         }
     }
 
@@ -101,6 +110,19 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
             LogHelper.v(TAG, "(small or normal) RECYCLER VIEW 1x");
             recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MusicSearchListAdapter.MusicClickItemEvent event) {
+        LogHelper.v(TAG, "onMessageEvent");
+        String musicLyrics = "FIXME: lyrics go here"; //FIXME: need to create an Intent Service to lookup the song lyrics
+        goToShowMusicLyricsActivity(event.getMusicModel(), musicLyrics);
+    }
+
+    @Override
+    public void onBackPressed() {
+        LogHelper.v(TAG, "onBackPressed");
+        goToMainActivity();
     }
 
     @Override

@@ -23,6 +23,8 @@ public class MainActivity extends BaseActivity {
     private Bundle savedInstanceState;
     private MusicSearch_ViewModel musicSearch_viewModel;
     private ProgressBar progressCircle;
+    
+    private static boolean didWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,10 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         LogHelper.v(TAG, "onResume");
         super.onResume();
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && ! didWelcome) {
             String welcome = getString(R.string.welcome);
             CustomToast.post(welcome);
+            didWelcome = true;
         }
     }
 

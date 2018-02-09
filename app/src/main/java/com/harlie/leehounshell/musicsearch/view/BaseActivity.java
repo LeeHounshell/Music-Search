@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
 import com.harlie.leehounshell.musicsearch.R;
+import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 
@@ -28,6 +29,8 @@ public class BaseActivity extends AppCompatActivity
     private final static String TAG = "LEE: <" + BaseActivity.class.getSimpleName() + ">";
 
     final static String KEY_SEARCH_RESULTS = "search_results";
+    final static String KEY_MUSIC_MODEL    = "music_model";
+    final static String KEY_LYRICS_RESULTS = "lyrics_results";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +38,13 @@ public class BaseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         hideSoftKeyboard();
+    }
+
+    @Override
+    public boolean onNavigateUp(){
+        LogHelper.v(TAG, "onNavigateUp");
+        finish();
+        return true;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -100,6 +110,14 @@ public class BaseActivity extends AppCompatActivity
         LogHelper.v(TAG, "goToBrowseMusicSearchResultsActivity");
         Intent browseIntent = new Intent(this, BrowseMusicSearchResultsActivity.class);
         browseIntent.putExtra(KEY_SEARCH_RESULTS, searchResults);
+        startTheActivity(browseIntent);
+    }
+
+    void goToShowMusicLyricsActivity(MusicModel musicModel, String musicLyrics) {
+        LogHelper.v(TAG, "goToShowMusicLyricsActivity");
+        Intent browseIntent = new Intent(this, ShowMusicLyricsActivity.class);
+        browseIntent.putExtra(KEY_MUSIC_MODEL, musicModel);
+        browseIntent.putExtra(KEY_LYRICS_RESULTS, musicLyrics);
         startTheActivity(browseIntent);
     }
 
