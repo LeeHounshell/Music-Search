@@ -21,6 +21,7 @@ public class MainActivity extends BaseActivity {
 
     private Bundle savedInstanceState;
     private MusicSearch_ViewModel musicSearch_viewModel;
+    private AppCompatEditText musicSearchEditText;
 
     private static boolean didWelcome;
 
@@ -30,6 +31,14 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
+        musicSearchEditText = findViewById(R.id.search_music_edit_text);
+        musicSearchEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LogHelper.v(TAG, "-CLICK-");
+                enterSearchTerm(view);
+            }
+        });
         musicSearch_viewModel = ViewModelProviders.of(this).get(MusicSearch_ViewModel.class);
     }
 
@@ -44,7 +53,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void enterSearchTerm(View view) {
+    private void enterSearchTerm(View view) {
         LogHelper.v(TAG, "-FOR THE READER-: i did not put API keys for Google Voice to Text translation here."
                 + " That would force readers to setup google services first.."
                 + " but, THIS IS A GOOD PLACE TO SEARCH USING MICROPHONE INPUT - left as an exercise for the reader");

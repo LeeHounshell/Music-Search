@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:onClick="enterSearchTerm"
         android:focusableInTouchMode="true"
         android:hint="@string/search_for_music"
         app:layout_constraintTop_toTopOf="@+id/guideline"
