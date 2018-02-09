@@ -8,7 +8,7 @@ public class LyricsCrazyJsonParser {
 
     public LyricsCrazyJsonParser(String invalidJsonFromLyricsWikaCom) {
         LogHelper.v(TAG, "LyricsCrazyJsonParser");
-        this.invalidJson = invalidJsonFromLyricsWikaCom;
+        invalidJson = invalidJsonFromLyricsWikaCom;
     }
 
     public String getArtistName() {

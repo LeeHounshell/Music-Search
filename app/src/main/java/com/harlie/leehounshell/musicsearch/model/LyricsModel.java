@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.util.LyricsCrazyJsonParser;
 
+@SuppressWarnings("WeakerAccess")
 public class LyricsModel implements Parcelable {
     private final static String TAG = "LEE: <" + LyricsModel.class.getSimpleName() + ">";
 

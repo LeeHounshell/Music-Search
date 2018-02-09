@@ -45,7 +45,10 @@ public class MainActivity extends BaseActivity {
     }
 
     public void enterSearchTerm(View view) {
-        LogHelper.v(TAG, "enterSearchTerm: -click-");
+        LogHelper.v(TAG, "-FOR THE READER-: i did not put API keys for Google Voice to Text translation here."
+                + " That would force readers to setup google services first.."
+                + " but, THIS IS A GOOD PLACE TO SEARCH USING MICROPHONE INPUT - left as an exercise for the reader");
+
         final AppCompatEditText musicSearchEditText = (AppCompatEditText) view;
         musicSearchEditText.setOnEditorActionListener((v, actionId, event) -> {
             LogHelper.v(TAG, "onEditorAction: actionId=" + actionId + ", event=" + event);

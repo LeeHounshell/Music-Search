@@ -3,4 +3,9 @@
     <dimen name="cardview_corner_radius">16dp</dimen>
     <dimen name="search_results_margin">32dp</dimen>
     <dimen name="progress_circle_size">55dp</dimen>
+    <dimen name="text_display_area">550dp</dimen>
+    <dimen name="text_display_area_middle">200dp</dimen>
+    <dimen name="text_display_padding">20dp</dimen>
+    <dimen name="text_display_padding_small">15dp</dimen>
+    <dimen name="lyrics_text_size">30sp</dimen>
 </resources>

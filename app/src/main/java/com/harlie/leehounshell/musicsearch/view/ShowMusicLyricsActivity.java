@@ -1,10 +1,14 @@
 package com.harlie.leehounshell.musicsearch.view;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class ShowMusicLyricsActivity extends BaseActivity {
     private final static String TAG = "LEE: <" + ShowMusicLyricsActivity.class.getSimpleName() + ">";
@@ -12,6 +16,11 @@ public class ShowMusicLyricsActivity extends BaseActivity {
     private String musicSearchResults;
     private MusicModel musicModel;
     private String musicLyrics;
+    private TextView trackName;
+    private TextView artistName;
+    private TextView albumName;
+    private TextView lyrics;
+    private RoundedImageView albumImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +48,32 @@ public class ShowMusicLyricsActivity extends BaseActivity {
         LogHelper.v(TAG, "onResume");
         LogHelper.v(TAG, "raw musicModel=" + musicModel);
         LogHelper.v(TAG, "raw musicLyrics=" + musicLyrics);
+        musicLyrics = musicLyrics
+                .replaceAll("\\\\n", "\n")
+                .replaceAll("\\\\'", "'");
         super.onResume();
+        trackName = findViewById(R.id.track_name);
+        trackName.setText(musicModel.getTrackName());
+        artistName = findViewById(R.id.artist_name);
+        artistName.setText(musicModel.getArtistName());
+        albumName = findViewById(R.id.album_name);
+        albumName.setText(musicModel.getCollectionName());
+        lyrics = findViewById(R.id.lyrics);
+        lyrics.setText(musicLyrics);
+        albumImage = findViewById(R.id.album_image);
+
+        albumImage.setOnClickListener(v -> LogHelper.v(TAG, "-FOR THE READER-: i did not put a uTube Search API key here."
+                + " That would force readers to setup google/uTube services first.."
+                + " but, THIS IS A GOOD PLACE TO SEARCH uTUBE - left as an exercise for the reader"));
+
+        //FIXME: here we are re-requesting the Image via the network!  bad bad bad
+        //       the good news is that the image is preserved fine on device rotation.
+        Glide.with(this)
+                .load(musicModel.getArtworkUrl100()) // NOTE: will be slower loading the large size artwork
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.album_image)
+                        .fitCenter())
+                .into(albumImage);
     }
 
     @Override
@@ -54,6 +88,11 @@ public class ShowMusicLyricsActivity extends BaseActivity {
         musicSearchResults = null;
         musicModel = null;
         musicLyrics = null;
+        trackName = null;
+        artistName = null;
+        albumName = null;
+        lyrics = null;
+        albumImage = null;
         super.onDestroy();
     }
 }

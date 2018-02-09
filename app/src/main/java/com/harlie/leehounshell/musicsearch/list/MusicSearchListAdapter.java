@@ -31,16 +31,21 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
     private final Context context;
     private List<MusicModel> musicModelList;
 
+    private static boolean alreadyShown;
+
     public MusicSearchListAdapter(Context context, MusicModelList musicModelList) {
         LogHelper.v(TAG, "MusicSearchListAdapter");
         this.context = context;
         if (musicModelList != null) {
             this.musicModelList = musicModelList.getResults();
             musicModelList.setResultsCount(this.musicModelList.size());
-            String foundHowMany = MusicSearchApplication.getAppContext().getString(R.string.found)
-                    + " " + musicModelList.getResultsCount()
-                    + " " + MusicSearchApplication.getAppContext().getString(R.string.matches);
-            CustomToast.post(foundHowMany);
+            if (! alreadyShown) {
+                alreadyShown = true;
+                String foundHowMany = MusicSearchApplication.getAppContext().getString(R.string.found)
+                        + " " + musicModelList.getResultsCount()
+                        + " " + MusicSearchApplication.getAppContext().getString(R.string.matches);
+                CustomToast.post(foundHowMany);
+            }
         }
     }
 
@@ -94,7 +99,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
     public class MusicSearchViewHolder extends RecyclerView.ViewHolder {
         private final String TAG = "LEE: <" + MusicSearchViewHolder.class.getSimpleName() + ">";
 
-        private View holderView;
+        private final View holderView;
         private ImageView albumCoverArt;
         private AppCompatTextView trackName;
         private AppCompatTextView artistName;
@@ -110,7 +115,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
             this.albumName = view.findViewById(R.id.album_name);
         }
 
-        public View getHolderView() {
+        View getHolderView() {
             //LogHelper.v(TAG, "getHolderView");
             return holderView;
         }

@@ -5,8 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center"
     android:textIsSelectable="false"
     android:orientation="vertical">
 
@@ -15,7 +13,6 @@
         android:id="@+id/one_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
         card_view:cardBackgroundColor="@color/colorDarkTurquoise"
         card_view:cardCornerRadius="@dimen/cardview_corner_radius"
         card_view:cardPreventCornerOverlap="false"
@@ -24,8 +21,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
             android:textIsSelectable="false"
             android:orientation="vertical">
 
@@ -38,7 +33,6 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/album_artwork"
                 android:src="@drawable/album_image"
-                android:layout_gravity="start|center_vertical"
                 android:scaleType="fitXY"
                 app:riv_corner_radius="@dimen/cardview_corner_radius"
                 app:riv_border_width="2dip"/>

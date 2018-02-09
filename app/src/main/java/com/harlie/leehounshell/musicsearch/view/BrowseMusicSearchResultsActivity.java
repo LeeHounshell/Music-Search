@@ -112,7 +112,9 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
                 }
             } else {
                 LogHelper.v(TAG, "default RECYCLER VIEW 1x");
-                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                manager.setSmoothScrollbarEnabled(true);
+                recyclerView.setLayoutManager(manager);
             }
         } else {
             LogHelper.v(TAG, "(small or normal) RECYCLER VIEW 1x");
