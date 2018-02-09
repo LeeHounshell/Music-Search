@@ -14,6 +14,8 @@ import com.harlie.leehounshell.musicsearch.model.MusicModelList;
 import com.harlie.leehounshell.musicsearch.util.FileUtil;
 import com.harlie.leehounshell.musicsearch.view.MainActivity;
 
+import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +50,8 @@ public class MusicSearchIntentServiceTest {
         musicModel = new MusicModel(); // TODO: add all constructor arguments
         musicModel.setArtistName("Tom Waits");
         musicModel.setTrackName("I Hope That I Don't Fall In Love With You");
+        musicModel.setCollectionName("Closing Time");
+        musicModel.setArtworkUrl100("http://is5.mzstatic.com/image/thumb/Music/v4/f5/08/dd/f508ddf9-bd03-f1d5-6e57-41fc0680005a/source/100x100bb.jpg");
     }
 
     @SuppressWarnings("deprecation")
@@ -67,8 +71,9 @@ public class MusicSearchIntentServiceTest {
             InputStream in = this.getClass().getClassLoader().getResourceAsStream("music_test_data.json");
             assertThat(in, notNullValue());
             String jsonInfo = FileUtil.convertStreamToString(in);
-            //System.out.println(TAG + "jsonInfo=" + jsonInfo);
+            System.out.println(TAG + "jsonInfo=" + jsonInfo);
             assertThat(jsonInfo, notNullValue());
+
             MusicModelList musicModelList = gson.fromJson(jsonInfo, MusicModelList.class);
             assertThat(musicModelList, notNullValue());
             MusicModel firstMusicModel = musicModelList.getResults().get(0);
@@ -81,6 +86,7 @@ public class MusicSearchIntentServiceTest {
         }
         catch (JsonParseException e) {
             System.err.println(TAG + "*** UNABLE TO PARSE JSON *** - e=" + e);
+            Assert.fail("failed to parse JSON containing search result");
         }
     }
 

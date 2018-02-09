@@ -23,12 +23,12 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
         @SuppressWarnings("CanBeFinal")
         private MusicModel musicModel;
         @SuppressWarnings("CanBeFinal")
-        private String lyricsResults;
+        private LyricsJsonParser lyricsJsonParser;
 
         MusicLyricsResultsEvent(MusicModel musicModel, String lyricsResults) {
             LogHelper.v(TAG, "MusicLyricsResultsEvent");
             this.musicModel = musicModel;
-            this.lyricsResults = lyricsResults;
+            lyricsJsonParser = new LyricsJsonParser(lyricsResults);
         }
 
         public MusicModel getMusicModel() {
@@ -38,14 +38,14 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
 
         public String getLyrics() {
             LogHelper.v(TAG, "getLyrics");
-            return lyricsResults;
+            return lyricsJsonParser.getLyrics();
         }
 
         @Override
         public String toString() {
             return "MusicLyricsResultsEvent{" +
                     "musicModel='" + musicModel + '\'' +
-                    "lyricsResults='" + lyricsResults + '\'' +
+                    "lyricsJsonParser='" + lyricsJsonParser + '\'' +
                     '}';
         }
     }
@@ -57,8 +57,10 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
             case STATUS_LYRICS_SEARCH_RESULTS: {
                 LogHelper.v(TAG, "onReceiveResult: STATUS_LYRICS_SEARCH_RESULTS");
                 MusicModel musicModel = resultData.getParcelable(MusicLyricsIntentService.MUSIC_MODEL);
-                String lyrics = resultData.getString(MusicLyricsIntentService.LYRICS_SEARCH_RESULTS);
-                LogHelper.v(TAG, "===> MUSIC LYRICS: ---> SUCCESSFUL!");
+                String invalidJson = resultData.getString(MusicLyricsIntentService.LYRICS_SEARCH_RESULTS);
+                LyricsJsonParser lyricsJsonParser = new LyricsJsonParser(invalidJson);
+                String lyrics = lyricsJsonParser.getLyrics();
+                LogHelper.v(TAG, "===> MUSIC LYRICS: " + lyrics + " ---> SUCCESSFUL!");
                 post(musicModel, lyrics);
                 break;
             }

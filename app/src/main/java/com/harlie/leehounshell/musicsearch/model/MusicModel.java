@@ -3,8 +3,6 @@ package com.harlie.leehounshell.musicsearch.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.harlie.leehounshell.musicsearch.util.LogHelper;
-
 import java.util.Date;
 
 // This is a POJO for a single JSON array element returned by requests made to https://itunes.apple.com/search?term=<search-term>
@@ -47,7 +45,7 @@ public class MusicModel implements Parcelable {
 
     @SuppressWarnings("WeakerAccess")
     public MusicModel(MusicModel musicModel) {
-        LogHelper.v(TAG, "MusicModel");
+        //LogHelper.v(TAG, "MusicModel");
         this.title = musicModel.getTitle();
         this.kind = musicModel.getKind();
         this.artistId = musicModel.getArtistId();
@@ -108,6 +106,7 @@ public class MusicModel implements Parcelable {
                       String primaryGenreName,
                       boolean isStreamable)
     {
+        //LogHelper.v(TAG, "MusicModel");
         this.title = title;
         this.kind = kind;
         this.artistId = artistId;

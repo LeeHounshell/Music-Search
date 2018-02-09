@@ -1,0 +1,6 @@
+song = {
+'artist':'Tom Waits',
+'song':'I Hope That I Don\'t Fall In Love With You',
+'lyrics':'Well, I hope that I don\'t fall in love with you\n\'Cause falling in love just makes me blue\nWell, the music plays and you display your heart for me to see\nI had a beer and now I hear you ca[...]',
+'url':'http://lyrics.wikia.com/Tom_Waits:I_Hope_That_I_Don%27t_Fall_In_Love_With_You'
+}

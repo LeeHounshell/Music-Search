@@ -9,6 +9,7 @@ import com.harlie.leehounshell.musicsearch.util.LogHelper;
 public class ShowMusicLyricsActivity extends BaseActivity {
     private final static String TAG = "LEE: <" + ShowMusicLyricsActivity.class.getSimpleName() + ">";
 
+    private String musicSearchResults;
     private MusicModel musicModel;
     private String musicLyrics;
 
@@ -18,6 +19,7 @@ public class ShowMusicLyricsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_music_lyrics);
         if (getIntent().getExtras() != null) {
+            musicSearchResults = getIntent().getExtras().getString(KEY_SEARCH_RESULTS, null);
             musicModel = getIntent().getExtras().getParcelable(KEY_MUSIC_MODEL);
             musicLyrics = getIntent().getExtras().getString(KEY_LYRICS_RESULTS, null);
         }
@@ -43,12 +45,15 @@ public class ShowMusicLyricsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         LogHelper.v(TAG, "onBackPressed");
-        super.onBackPressed();
+        goToBrowseMusicSearchResultsActivity(musicSearchResults);
     }
 
     @Override
     protected void onDestroy() {
         LogHelper.v(TAG, "onDestroy");
+        musicSearchResults = null;
+        musicModel = null;
+        musicLyrics = null;
         super.onDestroy();
     }
 }

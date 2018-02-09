@@ -47,7 +47,12 @@ public class BaseActivity extends AppCompatActivity
     protected void onStart() {
         LogHelper.v(TAG, "onStart");
         super.onStart();
-        progressCircle = findViewById(R.id.progress_circle);
+        if (this instanceof MainActivity) {
+            progressCircle = findViewById(R.id.progress_circle_main);
+        }
+        else if (this instanceof BrowseMusicSearchResultsActivity) {
+            progressCircle = findViewById(R.id.progress_circle_browse);
+        }
     }
 
     @Override
@@ -128,11 +133,12 @@ public class BaseActivity extends AppCompatActivity
         startTheActivity(browseIntent);
     }
 
-    void goToShowMusicLyricsActivity(MusicModel musicModel, String musicLyrics) {
+    void goToShowMusicLyricsActivity(MusicModel musicModel, String musicLyrics, String searchResults) {
         LogHelper.v(TAG, "goToShowMusicLyricsActivity");
         Intent browseIntent = new Intent(this, ShowMusicLyricsActivity.class);
         browseIntent.putExtra(KEY_MUSIC_MODEL, musicModel);
         browseIntent.putExtra(KEY_LYRICS_RESULTS, musicLyrics);
+        browseIntent.putExtra(KEY_SEARCH_RESULTS, searchResults);
         startTheActivity(browseIntent);
     }
 

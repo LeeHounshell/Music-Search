@@ -25,14 +25,14 @@ import okhttp3.Response;
 public class MusicLyricsIntentService extends IntentService {
     private final static String TAG = "LEE: <" + MusicLyricsIntentService.class.getSimpleName() + ">";
 
-    private static final String LYRICS_ENDPOINT = "http://lyrics.wikia.com/api.php?func=getSong&fmt=json";
+    private static final String LYRICS_ENDPOINT = "http://lyrics.wikia.com/api.php?func=getSongName&fmt=json";
 
     // IntentService can perform, e.g. ACTION_FIND_LYRICS
-    private static final String ACTION_FIND_LYRICS = "com.harlie.leehounshell.musicsearch.action.ACTION_FIND_LYRICS";
+    public static final String ACTION_FIND_LYRICS = "com.harlie.leehounshell.musicsearch.action.ACTION_FIND_LYRICS";
 
     public static final String MUSIC_MODEL = "com.harlie.leehounshell.musicsearch.extra.MUSIC_MODEL";
     public static final String LYRICS_SEARCH_RESULTS = "com.harlie.leehounshell.musicsearch.extra.LYRICS_SEARCH_RESULTS";
-    private static final String RECEIVER = "receiver";
+    public static final String RECEIVER = "receiver";
 
     public final static int STATUS_LYRICS_SEARCH_RESULTS = 1;
     public final static int STATUS_ERROR = 2;

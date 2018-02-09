@@ -54,10 +54,16 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        LogHelper.v(TAG, "onStart");
+        super.onStart();
+        initializeRecyclerView();
+    }
+
+    @Override
     protected void onResume() {
         LogHelper.v(TAG, "onResume");
         super.onResume();
-        initializeRecyclerView();
     }
 
     private void initializeRecyclerView() {
@@ -125,10 +131,8 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
     public void onMessageEvent(MusicLyricsResults.MusicLyricsResultsEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
         getProgressCircle().setVisibility(View.GONE);
-        goToShowMusicLyricsActivity(event.getMusicModel(), event.getLyrics());
+        goToShowMusicLyricsActivity(event.getMusicModel(), event.getLyrics(), musicSearchResults);
     }
-
-    //String musicLyrics = "FIXME: lyrics go here"; //FIXME: need to create an Intent Service to lookup the song lyrics
 
     @Override
     public void onBackPressed() {
