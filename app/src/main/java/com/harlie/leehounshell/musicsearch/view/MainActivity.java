@@ -61,7 +61,9 @@ public class MainActivity extends BaseActivity {
                 }
                 else {
                     LogHelper.v(TAG, "onEditorAction: searchString=" + searchString);
-                    getProgressCircle().setVisibility(View.VISIBLE);
+                    if (getProgressCircle() != null) {
+                        getProgressCircle().setVisibility(View.VISIBLE);
+                    }
                     musicSearch_viewModel.searchForMusic(searchString.trim());
                 }
             }
@@ -72,7 +74,9 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicSearchResults.MusicSearchResultsEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
-        getProgressCircle().setVisibility(View.GONE);
+        if (getProgressCircle() != null) {
+            getProgressCircle().setVisibility(View.GONE);
+        }
         goToBrowseMusicSearchResultsActivity(event.getSearchResults());
     }
 

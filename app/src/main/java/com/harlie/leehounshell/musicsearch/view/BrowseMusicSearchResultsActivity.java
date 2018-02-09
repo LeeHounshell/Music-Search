@@ -123,14 +123,18 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicSearchListAdapter.MusicClickItemEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
-        getProgressCircle().setVisibility(View.VISIBLE);
+        if (getProgressCircle() != null) {
+            getProgressCircle().setVisibility(View.VISIBLE);
+        }
         musicList_viewModel.searchForLyrics(event.getMusicModel());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicLyricsResults.MusicLyricsResultsEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
-        getProgressCircle().setVisibility(View.GONE);
+        if (getProgressCircle() != null) {
+            getProgressCircle().setVisibility(View.GONE);
+        }
         goToShowMusicLyricsActivity(event.getMusicModel(), event.getLyrics(), musicSearchResults);
     }
 

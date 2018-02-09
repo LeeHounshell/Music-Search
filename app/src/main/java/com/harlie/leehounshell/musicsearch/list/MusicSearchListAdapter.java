@@ -56,7 +56,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
         //LogHelper.v(TAG, "onBindViewHolder");
         MusicModel musicModel = musicModelList.get(position);
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.getHolderView().setOnClickListener(v -> {
             LogHelper.v(TAG, "-CLICK-");
             post(musicModel);
         });
@@ -94,6 +94,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
     public class MusicSearchViewHolder extends RecyclerView.ViewHolder {
         private final String TAG = "LEE: <" + MusicSearchViewHolder.class.getSimpleName() + ">";
 
+        private View holderView;
         private ImageView albumCoverArt;
         private AppCompatTextView trackName;
         private AppCompatTextView artistName;
@@ -102,10 +103,16 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
         MusicSearchViewHolder(View view) {
             super(view);
             //LogHelper.v(TAG, "MusicSearchViewHolder");
+            this.holderView = view;
             this.albumCoverArt = view.findViewById(R.id.album_image);
             this.trackName = view.findViewById(R.id.track_name);
             this.artistName = view.findViewById(R.id.artist_name);
             this.albumName = view.findViewById(R.id.album_name);
+        }
+
+        public View getHolderView() {
+            //LogHelper.v(TAG, "getHolderView");
+            return holderView;
         }
 
         ImageView getAlbumCoverArt() {

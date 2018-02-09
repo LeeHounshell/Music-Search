@@ -3,6 +3,9 @@ package com.harlie.leehounshell.musicsearch.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.harlie.leehounshell.musicsearch.util.LogHelper;
+import com.harlie.leehounshell.musicsearch.util.LyricsCrazyJsonParser;
+
 public class LyricsModel implements Parcelable {
     private final static String TAG = "LEE: <" + LyricsModel.class.getSimpleName() + ">";
 
@@ -31,6 +34,16 @@ public class LyricsModel implements Parcelable {
         this.songName = songName;
         this.lyrics = lyrics;
         this.url = url;
+    }
+
+    public LyricsModel(String jsonInfo) {
+        LogHelper.v(TAG, "---> crazy LyricsModel: jsonInfo=" + jsonInfo);
+        LyricsCrazyJsonParser lyricsCrazyJsonParser = new LyricsCrazyJsonParser(jsonInfo);
+        setArtistName(lyricsCrazyJsonParser.getArtistName());
+        setSongName(lyricsCrazyJsonParser.getSongName());
+        setLyrics(lyricsCrazyJsonParser.getLyrics());
+        setUrl(lyricsCrazyJsonParser.getUrl());
+        LogHelper.v(TAG, "---> crazy parse results=" + this);
     }
 
     public String getArtistName() {

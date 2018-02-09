@@ -7,10 +7,9 @@ import android.os.ResultReceiver;
 import android.support.v7.app.AppCompatActivity;
 
 import com.harlie.leehounshell.musicsearch.model.LyricsModel;
-import com.harlie.leehounshell.musicsearch.service.MusicLyricsIntentService;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
+import com.harlie.leehounshell.musicsearch.service.MusicLyricsIntentService;
 import com.harlie.leehounshell.musicsearch.util.FileUtil;
-import com.harlie.leehounshell.musicsearch.util.LyricsJsonParser;
 import com.harlie.leehounshell.musicsearch.view.BrowseMusicSearchResultsActivity;
 
 import org.junit.After;
@@ -47,10 +46,10 @@ public class MusicLyricsIntentServiceTest {
         MusicLyricsIntentService service = controller.bind().create().get();
         musicModel = new MusicModel(); // TODO: add all constructor arguments
         musicModel.setArtistName("Tom Waits");
-        musicModel.setTrackName("I Hope That I Don't Fall In Love With You");
+        musicModel.setTrackName("I Hope That I Don\\'t Fall In Love With You");
         musicModel.setCollectionName("Closing Time");
         musicModel.setArtworkUrl100("http://is5.mzstatic.com/image/thumb/Music/v4/f5/08/dd/f508ddf9-bd03-f1d5-6e57-41fc0680005a/source/100x100bb.jpg");
-        lyricsUrl = "http://lyrics.wikia.com/api.php?func=getSongName&fmt=json&artist=Tom+Waits&song=i+hope+that+i+don%27t+fall+in+love+with+you";
+        lyricsUrl = "http://lyrics.wikia.com/Tom_Waits:I_Hope_That_I_Don%27t_Fall_In_Love_With_You";
     }
 
     @SuppressWarnings("deprecation")
@@ -72,22 +71,17 @@ public class MusicLyricsIntentServiceTest {
         assertThat(jsonInfo, notNullValue());
 
         // NOTE: the loaded jsonInfo is not actually valid JSON.
-        // i had to create a custom parser to handle it properly.
-        LyricsJsonParser lyricsParser = new LyricsJsonParser(jsonInfo);
-        LyricsModel lyricsModel = new LyricsModel();
-        lyricsModel.setArtistName(lyricsParser.getArtistName());
-        lyricsModel.setSongName(lyricsParser.getSongName());
-        lyricsModel.setLyrics(lyricsParser.getLyrics());
-        lyricsModel.setUrl(lyricsParser.getUrl());
+        // needed to create a custom parser to handle it properly.
+        LyricsModel lyricsModel = new LyricsModel(jsonInfo);
 
         String artistName = lyricsModel.getArtistName();
-        assertEquals(artistName, musicModel.getArtistName());
+        assertEquals(musicModel.getArtistName(), artistName);
         String songName = lyricsModel.getSongName();
-        assertEquals(songName, musicModel.getTrackName());
+        assertEquals(musicModel.getTrackName(), songName);
         String lyrics = lyricsModel.getLyrics();
         assertThat(lyrics, notNullValue());
         String url = lyricsModel.getUrl();
-        assertEquals(url, lyricsUrl);
+        assertEquals(lyricsUrl, url);
     }
 
     @SuppressWarnings("deprecation")

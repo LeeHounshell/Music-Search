@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
+import com.harlie.leehounshell.musicsearch.model.LyricsModel;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.service.MusicLyricsIntentService;
 
@@ -23,12 +24,14 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
         @SuppressWarnings("CanBeFinal")
         private MusicModel musicModel;
         @SuppressWarnings("CanBeFinal")
-        private LyricsJsonParser lyricsJsonParser;
+        private LyricsModel lyricsModel;
 
-        MusicLyricsResultsEvent(MusicModel musicModel, String lyricsResults) {
-            LogHelper.v(TAG, "MusicLyricsResultsEvent");
+        MusicLyricsResultsEvent(MusicModel musicModel, String lyricsResultsCrazyJson) {
+            LogHelper.v(TAG, "MusicLyricsResultsEvent: lyricsResultsCrazyJson=" + lyricsResultsCrazyJson);
             this.musicModel = musicModel;
-            lyricsJsonParser = new LyricsJsonParser(lyricsResults);
+            // NOTE: the loaded lyricsResultsCrazyJson is not actually valid JSON.
+            // needed to create a custom parser to handle it properly.
+            lyricsModel = new LyricsModel(lyricsResultsCrazyJson);
         }
 
         public MusicModel getMusicModel() {
@@ -38,14 +41,14 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
 
         public String getLyrics() {
             LogHelper.v(TAG, "getLyrics");
-            return lyricsJsonParser.getLyrics();
+            return lyricsModel.getLyrics();
         }
 
         @Override
         public String toString() {
             return "MusicLyricsResultsEvent{" +
                     "musicModel='" + musicModel + '\'' +
-                    "lyricsJsonParser='" + lyricsJsonParser + '\'' +
+                    "lyricsModel='" + lyricsModel + '\'' +
                     '}';
         }
     }
@@ -57,11 +60,8 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
             case STATUS_LYRICS_SEARCH_RESULTS: {
                 LogHelper.v(TAG, "onReceiveResult: STATUS_LYRICS_SEARCH_RESULTS");
                 MusicModel musicModel = resultData.getParcelable(MusicLyricsIntentService.MUSIC_MODEL);
-                String invalidJson = resultData.getString(MusicLyricsIntentService.LYRICS_SEARCH_RESULTS);
-                LyricsJsonParser lyricsJsonParser = new LyricsJsonParser(invalidJson);
-                String lyrics = lyricsJsonParser.getLyrics();
-                LogHelper.v(TAG, "===> MUSIC LYRICS: " + lyrics + " ---> SUCCESSFUL!");
-                post(musicModel, lyrics);
+                String theCrazyResults = resultData.getString(MusicLyricsIntentService.LYRICS_SEARCH_RESULTS);
+                post(musicModel, theCrazyResults);
                 break;
             }
             case STATUS_ERROR: {
@@ -74,9 +74,9 @@ public class MusicLyricsResults implements MyResultReceiver.Receiver {
         }
     }
 
-    private static void post(MusicModel musicModel, String lyricsResults) {
+    private static void post(MusicModel musicModel, String theCrazyResults) {
         LogHelper.v(TAG, "post");
-        MusicLyricsResultsEvent lyricsResultsEvent = new MusicLyricsResultsEvent(musicModel, lyricsResults);
+        MusicLyricsResultsEvent lyricsResultsEvent = new MusicLyricsResultsEvent(musicModel, theCrazyResults);
         EventBus.getDefault().post(lyricsResultsEvent);
     }
 }
