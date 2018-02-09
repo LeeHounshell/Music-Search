@@ -7,7 +7,7 @@ import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 
 public class ShowMusicLyricsActivity extends BaseActivity {
-    private final static String TAG = "LEE: <" + BrowseMusicSearchResultsActivity.class.getSimpleName() + ">";
+    private final static String TAG = "LEE: <" + ShowMusicLyricsActivity.class.getSimpleName() + ">";
 
     private MusicModel musicModel;
     private String musicLyrics;

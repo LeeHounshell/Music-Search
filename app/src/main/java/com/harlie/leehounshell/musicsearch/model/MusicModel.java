@@ -8,6 +8,7 @@ import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import java.util.Date;
 
 // This is a POJO for a single JSON array element returned by requests made to https://itunes.apple.com/search?term=<search-term>
+@SuppressWarnings("WeakerAccess")
 public class MusicModel implements Parcelable {
     private final static String TAG = "LEE: <" + MusicModel.class.getSimpleName() + ">";
 
@@ -44,6 +45,7 @@ public class MusicModel implements Parcelable {
         //LogHelper.v(TAG, "MusicModel");
     }
 
+    @SuppressWarnings("WeakerAccess")
     public MusicModel(MusicModel musicModel) {
         LogHelper.v(TAG, "MusicModel");
         this.title = musicModel.getTitle();

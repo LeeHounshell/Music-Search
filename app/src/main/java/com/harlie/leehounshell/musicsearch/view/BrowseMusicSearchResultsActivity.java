@@ -5,12 +5,14 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.list.MusicSearchListAdapter;
 import com.harlie.leehounshell.musicsearch.util.CustomRecyclerView;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
+import com.harlie.leehounshell.musicsearch.util.MusicLyricsResults;
 import com.harlie.leehounshell.musicsearch.view_model.MusicList_ViewModel;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +32,7 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
         setContentView(R.layout.activity_browse_music_search_results);
         if (getIntent().getExtras() != null) {
             musicSearchResults = getIntent().getExtras().getString(KEY_SEARCH_RESULTS, null);
-            LogHelper.v(TAG, "onCreate: raw musicSearchResults=" + musicSearchResults);
+            LogHelper.v(TAG, "onCreate: we have the musicSearchResults");
         }
         else {
             LogHelper.e(TAG, "*** onCreate: getIntent().getExtras.getString(KEY_SEARCH_RESULTS) is null! ***");
@@ -115,9 +117,18 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicSearchListAdapter.MusicClickItemEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
-        String musicLyrics = "FIXME: lyrics go here"; //FIXME: need to create an Intent Service to lookup the song lyrics
-        goToShowMusicLyricsActivity(event.getMusicModel(), musicLyrics);
+        getProgressCircle().setVisibility(View.VISIBLE);
+        musicList_viewModel.searchForLyrics(event.getMusicModel());
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MusicLyricsResults.MusicLyricsResultsEvent event) {
+        LogHelper.v(TAG, "onMessageEvent");
+        getProgressCircle().setVisibility(View.GONE);
+        goToShowMusicLyricsActivity(event.getMusicModel(), event.getLyrics());
+    }
+
+    //String musicLyrics = "FIXME: lyrics go here"; //FIXME: need to create an Intent Service to lookup the song lyrics
 
     @Override
     public void onBackPressed() {

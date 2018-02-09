@@ -1,4 +1,4 @@
-package com.harlie.leehounshell.musicsearch;
+package com.harlie.leehounshell.musicsearch.service;
 
 
 import android.app.IntentService;
@@ -41,7 +41,7 @@ public class MusicSearchIntentService extends IntentService {
     public MusicSearchIntentService() {
         super("MusicSearchIntentService");
         if (okHttpClient == null) {
-            // avoid creating several instances, should be singleon
+            // avoid creating several instances, should be singleton
             okHttpClient = new OkHttpClient();
         }
     }

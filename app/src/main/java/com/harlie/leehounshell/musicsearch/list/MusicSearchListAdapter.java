@@ -160,7 +160,7 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
 
         private MusicModel musicModel;
 
-        public MusicClickItemEvent(MusicModel musicModel) {
+        MusicClickItemEvent(MusicModel musicModel) {
             this.musicModel = musicModel;
         }
 

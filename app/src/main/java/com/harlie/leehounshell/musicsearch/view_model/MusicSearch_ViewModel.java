@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.os.Handler;
 
 import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
-import com.harlie.leehounshell.musicsearch.MusicSearchIntentService;
+import com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.util.MusicSearchResults;
 import com.harlie.leehounshell.musicsearch.util.MyResultReceiver;

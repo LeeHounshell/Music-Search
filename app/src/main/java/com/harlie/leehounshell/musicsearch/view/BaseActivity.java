@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
@@ -32,12 +33,21 @@ public class BaseActivity extends AppCompatActivity
     final static String KEY_MUSIC_MODEL    = "music_model";
     final static String KEY_LYRICS_RESULTS = "lyrics_results";
 
+    private ProgressBar progressCircle;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         LogHelper.v(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         hideSoftKeyboard();
+    }
+
+    @Override
+    protected void onStart() {
+        LogHelper.v(TAG, "onStart");
+        super.onStart();
+        progressCircle = findViewById(R.id.progress_circle);
     }
 
     @Override
@@ -87,6 +97,11 @@ public class BaseActivity extends AppCompatActivity
         return metrics.heightPixels;
     }
 
+    ProgressBar getProgressCircle() {
+        //LogHelper.v(TAG, "getProgressCircle");
+        return progressCircle;
+    }
+
     void hideSoftKeyboard() {
         LogHelper.v(TAG, "hideSoftKeyboard");
         if (getWindow() != null) {
@@ -131,6 +146,7 @@ public class BaseActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         LogHelper.v(TAG, "onDestroy");
+        progressCircle = null;
         super.onDestroy();
     }
 

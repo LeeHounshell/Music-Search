@@ -18,6 +18,14 @@
         android:text="@string/music_search_results"
         android:textStyle="bold" />
 
+    <ProgressBar android:indeterminate="true"
+        style="?android:attr/progressBarStyle"
+        android:id="@+id/progress_circle"
+        android:layout_width="@dimen/progress_circle_size"
+        android:layout_height="@dimen/progress_circle_size"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"/>
+
     <com.harlie.leehounshell.musicsearch.util.CustomRecyclerView
         android:id="@+id/results_recycler_view"
         android:scrollbars="vertical"

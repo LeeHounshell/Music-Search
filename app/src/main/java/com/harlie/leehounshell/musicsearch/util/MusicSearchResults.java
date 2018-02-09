@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
-import com.harlie.leehounshell.musicsearch.MusicSearchIntentService;
+import com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService;
 
 import org.greenrobot.eventbus.EventBus;
 
-import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.STATUS_ERROR;
-import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.STATUS_MUSIC_SEARCH_RESULTS;
+import static com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService.STATUS_ERROR;
+import static com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService.STATUS_MUSIC_SEARCH_RESULTS;
 
 public class MusicSearchResults implements MyResultReceiver.Receiver {
     private final static String TAG = "LEE: <" + MusicSearchResults.class.getSimpleName() + ">";
@@ -19,10 +19,11 @@ public class MusicSearchResults implements MyResultReceiver.Receiver {
     public static class MusicSearchResultsEvent {
         private final static String TAG = "LEE: <" + MusicSearchResultsEvent.class.getSimpleName() + ">";
 
+        @SuppressWarnings("CanBeFinal")
         private String searchResults;
 
         MusicSearchResultsEvent(String searchResults) {
-            LogHelper.v(TAG, "MusicSearchResultsEvent: searchResults=" + searchResults);
+            LogHelper.v(TAG, "MusicSearchResultsEvent");
             this.searchResults = searchResults;
         }
 

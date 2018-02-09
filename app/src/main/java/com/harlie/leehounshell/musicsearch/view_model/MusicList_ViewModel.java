@@ -1,16 +1,21 @@
 package com.harlie.leehounshell.musicsearch.view_model;
 
 import android.arch.lifecycle.ViewModel;
+import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
 import com.harlie.leehounshell.musicsearch.R;
+import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.model.MusicModelList;
+import com.harlie.leehounshell.musicsearch.service.MusicLyricsIntentService;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
+import com.harlie.leehounshell.musicsearch.util.MusicLyricsResults;
 import com.harlie.leehounshell.musicsearch.util.MusicSearchResults;
+import com.harlie.leehounshell.musicsearch.util.MyResultReceiver;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,6 +26,13 @@ public class MusicList_ViewModel extends ViewModel {
 
     private String searchResults;
     private MusicModelList musicModelList;
+
+    public void searchForLyrics(MusicModel musicModel) {
+        LogHelper.v(TAG, "searchForMusic: artist=" + musicModel.getArtistName() + ", songName=" + musicModel.getTrackName());
+        MyResultReceiver receiver = new MyResultReceiver(new Handler());
+        receiver.setReceiver(new MusicLyricsResults());
+        MusicLyricsIntentService.startActionFindLyrics(MusicSearchApplication.getAppContext(), musicModel, receiver);
+    }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onMessageEvent(MusicSearchResults.MusicSearchResultsEvent event) {

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.harlie.leehounshell.musicsearch.MusicSearchIntentService;
+import com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.model.MusicModelList;
 import com.harlie.leehounshell.musicsearch.util.FileUtil;
@@ -26,9 +26,9 @@ import org.robolectric.annotation.Config;
 
 import java.io.InputStream;
 
-import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.ACTION_FIND_MUSIC;
-import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.MUSIC_SEARCH;
-import static com.harlie.leehounshell.musicsearch.MusicSearchIntentService.RECEIVER;
+import static com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService.ACTION_FIND_MUSIC;
+import static com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService.MUSIC_SEARCH;
+import static com.harlie.leehounshell.musicsearch.service.MusicSearchIntentService.RECEIVER;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;

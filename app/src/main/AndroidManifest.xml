@@ -35,7 +35,12 @@
         </activity>
 
         <service
-            android:name=".MusicSearchIntentService"
+            android:name=".service.MusicSearchIntentService"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name=".service.MusicLyricsIntentService"
             android:exported="false">
         </service>
 
