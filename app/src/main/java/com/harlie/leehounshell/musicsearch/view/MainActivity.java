@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ProgressBar;
 
 import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
@@ -21,6 +22,7 @@ public class MainActivity extends BaseActivity {
 
     private Bundle savedInstanceState;
     private MusicSearch_ViewModel musicSearch_viewModel;
+    private ProgressBar progressCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends BaseActivity {
         this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
         musicSearch_viewModel = ViewModelProviders.of(this).get(MusicSearch_ViewModel.class);
+        progressCircle = findViewById(R.id.progress_circle);
     }
 
     @Override
@@ -52,8 +55,15 @@ public class MainActivity extends BaseActivity {
             {
                 hideSoftKeyboard();
                 String searchString = musicSearchEditText.getText().toString();
-                LogHelper.v(TAG, "onEditorAction: searchString=" + searchString);
-                musicSearch_viewModel.searchForMusic(searchString);
+                if (searchString.trim().length() == 0) { // don't allow a whitespace search
+                    String invalidSearchTerm = getString(R.string.invalid_search_term);
+                    CustomToast.post(invalidSearchTerm);
+                }
+                else {
+                    LogHelper.v(TAG, "onEditorAction: searchString=" + searchString);
+                    progressCircle.setVisibility(View.VISIBLE);
+                    musicSearch_viewModel.searchForMusic(searchString.trim());
+                }
             }
             return false;
         });
@@ -62,6 +72,7 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicSearchResults.MusicSearchResultsEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
+        progressCircle.setVisibility(View.GONE);
         goToBrowseMusicSearchResultsActivity(event.getSearchResults());
     }
 
@@ -69,6 +80,8 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         LogHelper.v(TAG, "onDestroy");
         savedInstanceState = null;
+        musicSearch_viewModel = null;
+        progressCircle = null;
         super.onDestroy();
     }
 }

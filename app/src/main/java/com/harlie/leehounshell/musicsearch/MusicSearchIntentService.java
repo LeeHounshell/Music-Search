@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 
-import com.harlie.leehounshell.musicsearch.util.FileUtil;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 
 import java.io.IOException;
-import java.io.InputStream;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -21,6 +23,8 @@ import java.io.InputStream;
  */
 public class MusicSearchIntentService extends IntentService {
     private final static String TAG = "LEE: <" + MusicSearchIntentService.class.getSimpleName() + ">";
+
+    private static final String SEARCH_ENDPOINT = "https://itunes.apple.com/search?term=";
 
     // IntentService can perform, e.g. ACTION_FIND_MUSIC
     public static final String ACTION_FIND_MUSIC = "com.harlie.leehounshell.musicsearch.action.ACTION_FIND_MUSIC";
@@ -32,8 +36,14 @@ public class MusicSearchIntentService extends IntentService {
     public final static int STATUS_MUSIC_SEARCH_RESULTS = 1;
     public final static int STATUS_ERROR = 2;
 
+    private OkHttpClient okHttpClient;
+
     public MusicSearchIntentService() {
         super("MusicSearchIntentService");
+        if (okHttpClient == null) {
+            // avoid creating several instances, should be singleon
+            okHttpClient = new OkHttpClient();
+        }
     }
 
     /**
@@ -68,17 +78,28 @@ public class MusicSearchIntentService extends IntentService {
      * Handle action ACTION_FIND_MUSIC in the provided background thread with the provided parameters.
      */
     private void handleActionFindMusic(String musicSearchText, ResultReceiver receiver) {
-        LogHelper.v(TAG, "handleActionFindMusic");
+        LogHelper.v(TAG, "handleActionFindMusic: musicSearchText=" + musicSearchText);
         Bundle bundle = new Bundle();
         try {
+            Request request = new Request.Builder()
+                    .url(SEARCH_ENDPOINT + musicSearchText.replaceAll(" ", "+"))
+                    .build();
+
+            LogHelper.v(TAG, "sending network request..");
+            Response response = okHttpClient.newCall(request).execute(); // thread is already in the background, so synchronous call is ok here
+            String results;
+            if (response != null && response.body() != null) {
+                //noinspection ConstantConditions
+                results = response.body().string();
+            }
+            else {
+                LogHelper.e(TAG, "*** network request results are null! ***");
+                results = "";
+            }
+
             bundle.putString(MusicSearchIntentService.MUSIC_SEARCH, musicSearchText);
-
-            // FIXME: replace hard test data with network results and remove "music_test_data.json" from assets
-            InputStream in = getAssets().open("music_test_data.json");
-
-            String dummyResults = FileUtil.convertStreamToString(in);
-            bundle.putString(MusicSearchIntentService.MUSIC_SEARCH_RESULTS, dummyResults); // FIXME: edge case if the results are too big to process in Bundle
-            //LogHelper.v(TAG, "---> handleActionFindMusic SEND THE RESULTS: " + dummyResults);
+            bundle.putString(MusicSearchIntentService.MUSIC_SEARCH_RESULTS, results); // FIXME: edge case if the results are too big to process in a passed Bundle
+            LogHelper.v(TAG, "---> handleActionFindMusic SEND THE RESULTS: " + results);
             receiver.send(STATUS_MUSIC_SEARCH_RESULTS, bundle);
         }
         catch (NullPointerException e) {
@@ -93,5 +114,11 @@ public class MusicSearchIntentService extends IntentService {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        LogHelper.v(TAG, "onDestroy");
+        super.onDestroy();
+        okHttpClient = null;
+    }
 }
 

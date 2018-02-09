@@ -1,17 +1,15 @@
 package com.harlie.leehounshell.musicsearch.view;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.AttributeSet;
-import android.view.View;
 
 import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.list.MusicSearchListAdapter;
 import com.harlie.leehounshell.musicsearch.util.CustomRecyclerView;
+import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.view_model.MusicList_ViewModel;
 
@@ -29,6 +27,7 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
         setContentView(R.layout.activity_browse_music_search_results);
         if (getIntent().getExtras() != null) {
             musicSearchResults = getIntent().getExtras().getString(KEY_SEARCH_RESULTS, null);
+            LogHelper.v(TAG, "onCreate: raw musicSearchResults=" + musicSearchResults);
         }
         else {
             LogHelper.e(TAG, "*** onCreate: getIntent().getExtras.getString(KEY_SEARCH_RESULTS) is null! ***");
@@ -36,12 +35,11 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
         musicList_viewModel = ViewModelProviders.of(this).get(MusicList_ViewModel.class);
         musicList_viewModel.setSearchResults(musicSearchResults);
         musicList_viewModel.processSearchResults();
-    }
-
-    @Override
-    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        LogHelper.v(TAG, "onCreateView");
-        return super.onCreateView(parent, name, context, attrs);
+        if (musicList_viewModel.getMusicList() == null) {
+            String tryAgain = getString(R.string.try_again);
+            CustomToast.post(tryAgain);
+            goToMainActivity(); // foobar, the search failed or the results were too big to fit in the Bundle
+        }
     }
 
     @Override

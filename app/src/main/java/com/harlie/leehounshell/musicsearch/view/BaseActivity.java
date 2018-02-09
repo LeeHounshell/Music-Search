@@ -90,6 +90,12 @@ public class BaseActivity extends AppCompatActivity
         }
     }
 
+    void goToMainActivity() {
+        LogHelper.v(TAG, "goToMainActivity");
+        Intent browseIntent = new Intent(this, MainActivity.class);
+        startTheActivity(browseIntent);
+    }
+
     void goToBrowseMusicSearchResultsActivity(String searchResults) {
         LogHelper.v(TAG, "goToBrowseMusicSearchResultsActivity");
         Intent browseIntent = new Intent(this, BrowseMusicSearchResultsActivity.class);

@@ -3,7 +3,12 @@ package com.harlie.leehounshell.musicsearch.view_model;
 import android.arch.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
+import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
+import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.model.MusicModelList;
+import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.util.MusicSearchResults;
 
@@ -28,7 +33,21 @@ public class MusicList_ViewModel extends ViewModel {
     public void processSearchResults() {
         LogHelper.v(TAG, "processSearchResults");
         Gson gson = new Gson();
-        musicModelList = gson.fromJson(searchResults, MusicModelList.class);
+        try {
+            musicModelList = gson.fromJson(searchResults, MusicModelList.class);
+        }
+        catch (JsonSyntaxException e) {
+            LogHelper.e(TAG, "*** unable to parse searchResults! *** - e=" + e);
+            musicModelList = null;
+            String invalidSearchResults = MusicSearchApplication.getAppContext().getString(R.string.invalid_search_results);
+            CustomToast.post(invalidSearchResults);
+        }
+        catch (JsonParseException e) {
+            LogHelper.e(TAG, "*** unable to parse searchResults! *** - e=" + e);
+            musicModelList = null;
+            String invalidSearchResults = MusicSearchApplication.getAppContext().getString(R.string.invalid_search_results);
+            CustomToast.post(invalidSearchResults);
+        }
     }
 
     public MusicModelList getMusicList() {
@@ -50,6 +69,14 @@ public class MusicList_ViewModel extends ViewModel {
     public void setSearchResults(String searchResults) {
         LogHelper.v(TAG, "setSearchResults");
         this.searchResults = searchResults;
+    }
+
+    public int getResultsCount() {
+        int resultsCount = 0;
+        if (musicModelList != null) {
+            resultsCount = musicModelList.getResultsCount();
+        }
+        return resultsCount;
     }
 
     class MusicListSearchResultsEvent {

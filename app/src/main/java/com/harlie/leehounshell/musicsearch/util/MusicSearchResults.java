@@ -19,9 +19,10 @@ public class MusicSearchResults implements MyResultReceiver.Receiver {
     public static class MusicSearchResultsEvent {
         private final static String TAG = "LEE: <" + MusicSearchResultsEvent.class.getSimpleName() + ">";
 
-        private final String searchResults;
+        private String searchResults;
 
         MusicSearchResultsEvent(String searchResults) {
+            LogHelper.v(TAG, "MusicSearchResultsEvent: searchResults=" + searchResults);
             this.searchResults = searchResults;
         }
 

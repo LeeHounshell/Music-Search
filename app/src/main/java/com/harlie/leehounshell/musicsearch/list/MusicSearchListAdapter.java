@@ -12,9 +12,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.harlie.leehounshell.musicsearch.MusicSearchApplication;
 import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.model.MusicModelList;
+import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 
 import java.util.List;
@@ -32,6 +34,11 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
         this.context = context;
         if (musicModelList != null) {
             this.musicModelList = musicModelList.getResults();
+            musicModelList.setResultsCount(this.musicModelList.size());
+            String foundHowMany = MusicSearchApplication.getAppContext().getString(R.string.found)
+                    + " " + musicModelList.getResultsCount()
+                    + " " + MusicSearchApplication.getAppContext().getString(R.string.matches);
+            CustomToast.post(foundHowMany);
         }
     }
 
