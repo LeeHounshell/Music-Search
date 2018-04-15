@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.MainActivity">
 
     <data>
         <variable
@@ -9,43 +11,56 @@
             type="com.harlie.leehounshell.musicsearch.interfaces.ISearchMusic"/>
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/search_margin"
-        tools:context=".view.MainActivity">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/search_music_label"
-            style="@style/MyPrimaryTextViewStyle"
+        <android.support.constraint.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:id="@+id/guideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/MyPrimaryTextViewStyle"
+            android:id="@+id/search_music_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/music_search"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/search_music_edit_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/search_music_edit_text"
             style="@style/MyPrimaryTextViewStyle"
+            android:id="@+id/search_music_edit_text"
             android:onClick="@{(view) -> searchMusic.searchForMusic(view)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:ems="10"
+            android:inputType="text"
             android:focusableInTouchMode="true"
             android:hint="@string/search_for_music"
-            android:inputType="text"/>
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <ProgressBar android:indeterminate="true"
-            android:id="@+id/progress_circle_main"
             style="?android:attr/progressBarStyle"
+            android:id="@+id/progress_circle_main"
             android:layout_width="@dimen/progress_circle_size"
             android:layout_height="@dimen/progress_circle_size"
             android:layout_gravity="center_vertical|center_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             android:visibility="gone"/>
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>
