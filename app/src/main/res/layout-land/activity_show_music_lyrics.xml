@@ -6,6 +6,10 @@
     tools:context=".view.ShowMusicLyricsActivity">
 
     <data>
+        <import type="com.harlie.leehounshell.musicsearch.util.LyricsFormatter"/>
+        <variable
+            name="formatter"
+            type="com.harlie.leehounshell.musicsearch.util.LyricsFormatter"/>
         <variable
             name="musicModel"
             type="com.harlie.leehounshell.musicsearch.model.MusicModel"/>
@@ -40,7 +44,7 @@
                         <TextView
                             style="@style/MyPrimaryTextViewStyle"
                             android:id="@+id/lyrics"
-                            android:text="@{musicLyrics}"
+                            android:text="@{formatter.formatLyrics(musicLyrics)}"
                             android:layout_gravity="center"
                             android:textSize="@dimen/lyrics_text_size"
                             android:layout_width="wrap_content"

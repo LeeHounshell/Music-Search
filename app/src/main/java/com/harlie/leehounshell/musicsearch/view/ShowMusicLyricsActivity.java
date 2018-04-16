@@ -7,6 +7,7 @@ import com.harlie.leehounshell.musicsearch.R;
 import com.harlie.leehounshell.musicsearch.databinding.ActivityShowMusicLyricsBinding;
 import com.harlie.leehounshell.musicsearch.model.MusicModel;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
+import com.harlie.leehounshell.musicsearch.util.LyricsFormatter;
 
 public class ShowMusicLyricsActivity extends BaseActivity {
     private final static String TAG = "LEE: <" + ShowMusicLyricsActivity.class.getSimpleName() + ">";
@@ -14,6 +15,7 @@ public class ShowMusicLyricsActivity extends BaseActivity {
     private ActivityShowMusicLyricsBinding mBinding;
     private String musicSearchResults;
     private MusicModel musicModel;
+    private LyricsFormatter formatter;
     private String musicLyrics;
 
     @Override
@@ -26,11 +28,11 @@ public class ShowMusicLyricsActivity extends BaseActivity {
             musicSearchResults = getIntent().getExtras().getString(KEY_SEARCH_RESULTS, null);
             musicModel = getIntent().getExtras().getParcelable(KEY_MUSIC_MODEL);
             musicLyrics = getIntent().getExtras().getString(KEY_LYRICS_RESULTS, null);
-            musicLyrics = musicLyrics
-                    .replaceAll("\\\\n", "\n")
-                    .replaceAll("\\\\'", "'");
+            formatter = new LyricsFormatter();
+
             mBinding.setMusicModel(musicModel);
             mBinding.setMusicLyrics(musicLyrics);
+            mBinding.setFormatter(formatter);
         }
         else {
             LogHelper.e(TAG, "*** onCreate: getIntent().getExtras.getString(KEY_SEARCH_RESULTS) is null! ***");
