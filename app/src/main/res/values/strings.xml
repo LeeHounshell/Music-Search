@@ -10,7 +10,6 @@
     <string name="album_name">The album name</string>
     <string name="invalid_search_term">Invalid Search Term</string>
     <string name="invalid_search_results">Invalid Search Results</string>
-    <string name="try_again">Try Again..</string>
     <string name="found">Found</string>
     <string name="matches">matches!</string>
 </resources>

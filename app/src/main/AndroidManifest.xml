@@ -28,12 +28,12 @@
         </activity>
 
         <activity
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:name=".view.BrowseMusicSearchResultsActivity">
         </activity>
 
         <activity
-            android:launchMode="singleInstance"
+            android:launchMode="singleTop"
             android:name=".view.ShowMusicLyricsActivity">
         </activity>
 

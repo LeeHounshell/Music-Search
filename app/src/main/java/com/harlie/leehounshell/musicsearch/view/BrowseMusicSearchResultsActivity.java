@@ -41,9 +41,8 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
         musicList_viewModel.setSearchResults(musicSearchResults);
         musicList_viewModel.processSearchResults();
         if (musicList_viewModel.getMusicList() == null) {
-            String tryAgain = getString(R.string.try_again);
-            CustomToast.post(tryAgain);
-            goToMainActivity(); // foobar, the search failed or the results were too big to fit in the Bundle
+            LogHelper.v(TAG, "--- no search criteria ---");
+            goToMainActivity(); // no search data
         }
         if (getActionBar() != null) { // FIXME: for this to work properly I need to add a Toolbar to the screen layouts, for now onBackPressed will do
             getActionBar().setDisplayHomeAsUpEnabled(true); // show back arrow
@@ -128,7 +127,12 @@ public class BrowseMusicSearchResultsActivity extends BaseActivity {
         if (getProgressCircle() != null) {
             getProgressCircle().setVisibility(View.VISIBLE);
         }
-        musicList_viewModel.searchForLyrics(event.getMusicModel());
+        if (musicList_viewModel != null) {
+            musicList_viewModel.searchForLyrics(event.getMusicModel());
+        }
+        else {
+            LogHelper.w(TAG, "onMessageEvent but null musicList_viewModel!");
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

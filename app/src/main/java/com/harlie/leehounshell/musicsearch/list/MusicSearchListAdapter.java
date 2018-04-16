@@ -163,8 +163,13 @@ public class MusicSearchListAdapter extends RecyclerView.Adapter<MusicSearchList
 
     private void post(MusicModel musicModel) {
         LogHelper.v(TAG, "post");
-        MusicClickItemEvent musicClickItemEvent = new MusicClickItemEvent(musicModel);
-        EventBus.getDefault().post(musicClickItemEvent);
+        if (musicModel != null) {
+            MusicClickItemEvent musicClickItemEvent = new MusicClickItemEvent(musicModel);
+            EventBus.getDefault().post(musicClickItemEvent);
+        }
+        else {
+            LogHelper.w(TAG, "post for null MusicModel!");
+        }
     }
 
     public static class MusicClickItemEvent {
