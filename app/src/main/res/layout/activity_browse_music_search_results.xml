@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/music_search_results"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar android:indeterminate="true"
         style="?android:attr/progressBarStyle"
@@ -20,7 +21,8 @@
         android:layout_width="@dimen/progress_circle_size"
         android:layout_height="@dimen/progress_circle_size"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
 
     <com.harlie.leehounshell.musicsearch.util.CustomRecyclerView
         android:id="@+id/results_recycler_view"
@@ -28,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        tools:listitem="@layout/one_music_model_row" />
+        tools:listitem="@layout/one_music_model_row"
+        tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>
