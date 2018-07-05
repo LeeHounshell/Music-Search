@@ -6,9 +6,13 @@
     tools:context=".view.MainActivity">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="searchMusic"
             type="com.harlie.leehounshell.musicsearch.interfaces.ISearchMusic"/>
+        <variable
+            name="progressVisible"
+            type="com.harlie.leehounshell.musicsearch.util.VisibleHelper"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -59,7 +63,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            android:visibility="gone"/>
+            android:visibility="@{(progressVisible.isVisible()) ? View.VISIBLE : View.GONE}"/>
 
     </android.support.constraint.ConstraintLayout>
 

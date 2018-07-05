@@ -53,8 +53,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    // data binding
-    annotationProcessor 'com.android.databinding:compiler:3.1.1'
+    // data binding - dependency no longer needed
+    //implementation 'com.android.databinding:compiler:3.1.1'
+    //annotationProcessor 'com.android.databinding:compiler:3.1.1'
 
     // Lifecyles, LiveData and ViewModel
     implementation "android.arch.lifecycle:runtime:1.1.0"

@@ -14,6 +14,7 @@ import com.harlie.leehounshell.musicsearch.interfaces.ISearchMusic;
 import com.harlie.leehounshell.musicsearch.util.CustomToast;
 import com.harlie.leehounshell.musicsearch.util.LogHelper;
 import com.harlie.leehounshell.musicsearch.util.MusicSearchResults;
+import com.harlie.leehounshell.musicsearch.util.VisibleHelper;
 import com.harlie.leehounshell.musicsearch.view_model.MusicSearch_ViewModel;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -25,6 +26,7 @@ public class MainActivity extends BaseActivity implements ISearchMusic {
     private ActivityMainBinding mBinding;
     private Bundle savedInstanceState;
     private MusicSearch_ViewModel musicSearch_viewModel;
+    private VisibleHelper progressVisibility;
 
     private static boolean didWelcome;
 
@@ -34,8 +36,10 @@ public class MainActivity extends BaseActivity implements ISearchMusic {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         musicSearch_viewModel = ViewModelProviders.of(this).get(MusicSearch_ViewModel.class);
+        progressVisibility = new VisibleHelper();
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.setSearchMusic((ISearchMusic) this);
+        mBinding.setProgressVisible(progressVisibility);
     }
 
     @Override
@@ -70,9 +74,11 @@ public class MainActivity extends BaseActivity implements ISearchMusic {
                 }
                 else {
                     LogHelper.v(TAG, "onEditorAction: searchString=" + searchString);
-                    if (getProgressCircle() != null) {
-                        getProgressCircle().setVisibility(View.VISIBLE);
-                    }
+                    LogHelper.v(TAG, "make ProgressBar VISIBLE");
+                    progressVisibility.setVisible(true);
+//                    if (getProgressCircle() != null) {
+//                        getProgressCircle().setVisibility(View.VISIBLE);
+//                    }
                     musicSearch_viewModel.searchForMusic(searchString.trim());
                 }
             }
@@ -83,9 +89,11 @@ public class MainActivity extends BaseActivity implements ISearchMusic {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MusicSearchResults.MusicSearchResultsEvent event) {
         LogHelper.v(TAG, "onMessageEvent");
-        if (getProgressCircle() != null) {
-            getProgressCircle().setVisibility(View.GONE);
-        }
+        LogHelper.v(TAG, "make ProgressBar GONE");
+        progressVisibility.setVisible(false);
+//        if (getProgressCircle() != null) {
+//            getProgressCircle().setVisibility(View.GONE);
+//        }
         goToBrowseMusicSearchResultsActivity(event.getSearchResults());
     }
 
